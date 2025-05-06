@@ -1,0 +1,5 @@
+flask==2.3.3
+yfinance==0.2.48
+requests==2.31.0
+pandas==2.0.3
+numpy==1.24.4
