@@ -3,11 +3,17 @@ import os
 import importlib.util
 import sys
 from pathlib import Path
+from supabase import create_client, Client
 
 app = Flask(__name__)
 
 # Base directory for agents
 AGENTS_DIR = Path("agents")
+
+# Supabase configuration
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://lcgzszeurmhxpxuhdyvk.supabase.co")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjZ3pzemV1cm1oeHB4dWhkeXZrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NTE0MjE0NCwiZXhwIjoyMDYwNzE4MTQ0fQ.9nA8g7tIgWCpP9-uasXggn6061WgQueE7fhX_nWycio")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 @app.route('/<agent_id>/', methods=['GET', 'POST'])
 def handle_agent(agent_id):
@@ -44,6 +50,20 @@ def handle_agent(agent_id):
         input_data = request.json if request.is_json else {}
         result = module.process_request(input_data)
         return jsonify(result)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/<agent_id>/.well-known/agent.json', methods=['GET'])
+def get_agent_card(agent_id):
+    try:
+        # Fetch the agent from Supabase
+        response = supabase.table("agents").select("agent_card").eq("id", agent_id).single().execute()
+        if not response.data:
+            return jsonify({"error": f"Agent {agent_id} not found in database"}), 404
+
+        agent_card = response.data["agent_card"]
+        return jsonify(agent_card)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
