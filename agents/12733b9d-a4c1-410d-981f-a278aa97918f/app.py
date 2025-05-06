@@ -65,7 +65,7 @@ def tasks_send_subscribe():
 
         task_id = str(uuid.uuid4())
 
-        # Simulate asynchronous processing (replace with actual async2 logic)
+        # Simulate asynchronous processing (replace with actual async3 logic)
         result = num1 + num2
 
         # Simulate sending the result to the callback URL
