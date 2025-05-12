@@ -8,7 +8,7 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-# 2In-memory todo list (replace with persistent storage for production)
+# 3In-memory todo list (replace with persistent storage for production)
 todo_list = []
 
 @app.route('/tasks/send', methods=['POST'])
