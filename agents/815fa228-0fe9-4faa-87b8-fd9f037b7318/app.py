@@ -8,7 +8,7 @@ import json
 
 app = Flask(__name__)
 
-# In-memory to-do list (replace with persistent storage for production)
+# 1In-memory to-do list (replace with persistent storage for production)
 todo_list = {}
 
 @app.route('/tasks/send', methods=['POST'])
