@@ -9,7 +9,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# 1In-memory to-do list storage (replace with a database in a real application)
+# 2In-memory to-do list storage (replace with a database in a real application)
 todo_list = {}
 
 AGENT_CARD = {
@@ -113,14 +113,14 @@ if __name__ == '__main__':
 
 # Ensure the process_request function exists
 def process_request(input_data):
-    try:
-        # If the agent code already defines process_request, use it
-        if 'process_request' in globals():
-            return globals()['process_request'](input_data)
-        # Otherwise, provide a default implementation
-        return {"status": "Agent processed request", "input": input_data}
-    except Exception as e:
-        return {"error": str(e)}
+   try:
+       # If the agent code already defines process_request, use it
+       if 'process_request' in globals():
+           return globals()['process_request'](input_data)
+       # Otherwise, provide a default implementation
+       return {"status": "Agent processed request", "input": input_data}
+   except Exception as e:
+       return {"error": str(e)}
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+   app.run(host='0.0.0.0', port=8080)
