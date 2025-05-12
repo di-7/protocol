@@ -68,7 +68,7 @@ def tasks_send():
 
 @app.route('/tasks/sendSubscribe', methods=['POST'])
 def tasks_send_subscribe():
-    # In this example, we don't handle subscriptions.
+    # 1In this example, we don't handle subscriptions.
     # You would typically store the subscription information here.
     return jsonify({"status": "OK", "result": "Subscription request received."})
 
